@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;">
+</canvas>
+
+<script>
+let c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+
+function drawRect(x, y, r){
+    ctx.fillStyle = `rgb(${r},0,0)`;
+    ctx.fillRect(x, y, 5, 500);
+}
+
+function random100Arc(){
+    for( let i = 0 ; i < 100 ; i++ ){
+        drawArc();
+    }
+}
+
+function getRandomNumber(n){
+    let x = Math.random()*n;
+    return Math.round(x);
+}
+
+function getRandomColor(){
+    let r = getRandomNumber(255);
+    let g = getRandomNumber(255);
+    let b = getRandomNumber(255);
+    return `rgb(${r},0,0)`;
+}
+
+function drawArc() {
+    ctx.beginPath();
+    ctx.fillStyle = getRandomColor();
+    ctx.arc(getRandomNumber(500), getRandomNumber(500), getRandomNumber(100) +40, 0, 2 * Math.PI);
+    ctx.fill();
+}
+
+setInterval(random100Arc, 10);
+
+</script>
+
+</body>
+</html>

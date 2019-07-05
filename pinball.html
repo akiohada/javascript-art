@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;">
+  </canvas>
+  <script type="text/javascript">
+
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    ctx.globalCompositeOperation = "lighter";
+    //以降キャンバスに対して描画を行うにはctxを呼び出す
+
+    function getRandomNumber(num)
+    {
+      return Math.round(Math.random() * num);
+    }
+
+    function getRandomColor()
+    {
+      let r = getRandomNumber(255);
+      let g = getRandomNumber(255);
+      let b = getRandomNumber(255);
+      return `rgb(${r},${g},${b})`;
+    }
+
+    function getRandomColor2()
+    {
+      let r = getRandomNumber(255);
+      let g = getRandomNumber(255);
+      let b = getRandomNumber(255);
+      let a = Math.random()+0.5;
+      return `rgba(${r - 50},${g - 50},${b + 50},${a}}`;
+    }
+
+    var data = {
+      x: 0,
+      y: 0,
+      speedX: 3,
+      speedY: 3,
+      setData: function(_x, _y, _width, _height, _color) {
+        this.x = _x;
+        this.y = _y;
+        this.speedX = this.speedX + getRandomNumber(10);
+        this.speedY = this.speedY + getRandomNumber(10);
+        this.color = _color;
+      },
+      /*draw: function() {
+        setInterval(this.move, 50, this);
+      },*/
+      //setIntervalはglobalメソッドなので、引数にdataオブジェクトを渡す必要がある。
+      draw: function() {
+        setInterval( () => {this.move(this)}, 50);
+      },
+      //
+      move: function(obj) {
+        ctx.globalCompositeOperation = "lighter"; //色が重なったときの合成の仕方
+        obj.x += obj.speedX;
+        obj.y += obj.speedY;
+        if(obj.x > 500 || obj.x < 0){
+          obj.speedX = -obj.speedX;
+        }
+        if(obj.y > 500 || obj.y < 0){
+          obj.speedY = -obj.speedY;
+        }
+        ctx.beginPath();
+        ctx.fillStyle = obj.color;
+        ctx.arc(obj.x, obj.y, 30, 0, Math.PI*2, true);
+        ctx.fill();
+      }
+    };
+
+    
+    function drawRect(_num){
+      for (let i = 0; i < _num; i++) {
+        for (let j = 0; j < _num; j++) {
+          let obj1 = Object.create(data);
+          obj1.setData(50*i, 50*j, 50, 50, getRandomColor());
+          obj1.draw();
+        }
+      }
+    }
+    
+
+    function drawBackground(){
+      ctx.globalCompositeOperation = "source-over";
+      ctx.fillStyle = "rgba(8,5,6,.1)";
+      ctx.fillRect(0, 0, 500, 500);
+    }
+
+    drawRect(3);
+
+    setInterval(drawBackground, 33);
+
+  </script>
+</body>
+
+</html>
