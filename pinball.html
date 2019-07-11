@@ -16,21 +16,18 @@
     ctx.globalCompositeOperation = "lighter";
     //以降キャンバスに対して描画を行うにはctxを呼び出す
 
-    function getRandomNumber(num)
-    {
+    function getRandomNumber(num) {
       return Math.round(Math.random() * num);
     }
 
-    function getRandomColor()
-    {
+    function getRandomColor() {
       let r = getRandomNumber(255);
       let g = getRandomNumber(255);
       let b = getRandomNumber(255);
       return `rgb(${r},${g},${b})`;
     }
 
-    function getRandomColor2()
-    {
+    function getRandomColor2() {
       let r = getRandomNumber(255);
       let g = getRandomNumber(255);
       let b = getRandomNumber(255);
